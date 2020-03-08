@@ -1,0 +1,19 @@
+{# templates/file/index.html.twig #}
+
+{% extends 'list.html.twig' %}
+
+{% set create_path, list_path, display_create_path = 'file_add', 'file', true %}
+
+{% block documentation %}
+<a href="{{ path('documentation', { 'pageCode': 'FILE' }) }}" target="_blank" class="w3-bar-item w3-button"><img src="{{ asset('images/help-16.png') }}">&nbsp;{{ 'help'|trans }}</a>
+{% endblock %}
+
+{% block link %}
+
+{% if listFiles[i*listContext.numberLinesDisplayed+j].ID == userContext.currentFileID %}
+	<a href="{{ path('file_edit', { 'fileID': listFiles[i*listContext.numberLinesDisplayed+j].ID }) }}" class="w3-bar-item w3-button w3-{{ lineColor }} w3-round-large"><img src="{{ asset('images/file-32.png') }}">&nbsp;{{ listFiles[i*listContext.numberLinesDisplayed+j].name }}&nbsp;&nbsp;&nbsp;<img src="{{ asset('images/administrator-32.png') }}">&nbsp;{{ listFiles[i*listContext.numberLinesDisplayed+j].user.userName }}<span class="w3-badge w3-right w3-green">{{ 'file.current'|trans }}</span></a>
+{% else %}
+	<a href="{{ path('file_edit', { 'fileID': listFiles[i*listContext.numberLinesDisplayed+j].ID }) }}" class="w3-bar-item w3-button w3-{{ lineColor }} w3-round-large"><img src="{{ asset('images/file-32.png') }}">&nbsp;{{ listFiles[i*listContext.numberLinesDisplayed+j].name }}&nbsp;&nbsp;&nbsp;<img src="{{ asset('images/administrator-32.png') }}">&nbsp;{{ listFiles[i*listContext.numberLinesDisplayed+j].user.userName }}</a>
+{% endif %}
+
+{% endblock %}

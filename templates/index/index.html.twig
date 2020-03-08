@@ -1,0 +1,15 @@
+{# templates/default/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="w3-panel w3-sand w3-round-large w3-margin-top">
+   <p>{{ 'welcome.user'|trans({'%name%': app.user.userName}) }}</p>
+</div>
+
+<div class="w3-margin-top">
+    <img class="center" src="{{ asset('images/welcome-half.jpg') }}" alt="Slam Booking">
+</div>
+
+{% endblock %}
