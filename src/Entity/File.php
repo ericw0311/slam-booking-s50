@@ -64,6 +64,11 @@ class File
      */
     private $userFileGroups;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Label", mappedBy="file", orphanRemoval=true)
+     */
+    private $labels;
+
     public function __construct(?User $user)
     {
         $this->setUser($user);
@@ -71,6 +76,7 @@ class File
         $this->userFiles = new ArrayCollection();
         $this->timetables = new ArrayCollection();
         $this->userFileGroups = new ArrayCollection();
+        $this->labels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -230,6 +236,37 @@ class File
             // set the owning side to null (unless already changed)
             if ($userFileGroup->getFile() === $this) {
                 $userFileGroup->setFile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Label[]
+     */
+    public function getLabels(): Collection
+    {
+        return $this->labels;
+    }
+
+    public function addLabel(Label $label): self
+    {
+        if (!$this->labels->contains($label)) {
+            $this->labels[] = $label;
+            $label->setFile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLabel(Label $label): self
+    {
+        if ($this->labels->contains($label)) {
+            $this->labels->removeElement($label);
+            // set the owning side to null (unless already changed)
+            if ($label->getFile() === $this) {
+                $label->setFile(null);
             }
         }
 

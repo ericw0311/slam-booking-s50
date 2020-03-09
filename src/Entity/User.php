@@ -115,6 +115,11 @@ class User implements UserInterface
      */
     private $userFileGroups;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Label", mappedBy="user", orphanRemoval=true)
+     */
+    private $labels;
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
@@ -125,6 +130,7 @@ class User implements UserInterface
         $this->timetables = new ArrayCollection();
         $this->timetableLines = new ArrayCollection();
         $this->userFileGroups = new ArrayCollection();
+        $this->labels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -526,6 +532,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userFileGroup->getUser() === $this) {
                 $userFileGroup->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Label[]
+     */
+    public function getLabels(): Collection
+    {
+        return $this->labels;
+    }
+
+    public function addLabel(Label $label): self
+    {
+        if (!$this->labels->contains($label)) {
+            $this->labels[] = $label;
+            $label->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLabel(Label $label): self
+    {
+        if ($this->labels->contains($label)) {
+            $this->labels->removeElement($label);
+            // set the owning side to null (unless already changed)
+            if ($label->getUser() === $this) {
+                $label->setUser(null);
             }
         }
 
