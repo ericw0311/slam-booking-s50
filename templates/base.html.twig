@@ -53,6 +53,9 @@ $( function() {
 	<a href="{{ path('home')}}" class="w3-bar-item w3-button w3-orange"><i class="fa fa-home w3-xlarge"></i>&nbsp;{{ userContext.getCurrentFileName() }}</a>
 {% endif %}
 	<a href="{{ path('file', { 'page': 1 })}}" class="w3-bar-item w3-button"><img src="{{ asset('images/file-16.png') }}">&nbsp;{{ 'file.plural'|trans }}</a>
+{% if (userContext.getCurrentFileID() > 0) and userContext.getCurrentUserFileAdministrator() %}
+	<a href="{{ path('easyadmin')}}" class="w3-bar-item w3-button"><img src="{{ asset('images/administration-16.png') }}">&nbsp;{{ 'administration'|trans }}</a>
+{% endif %}
 {# TPRR
 {% if (userContext.getCurrentFileID() > 0) %}
 	<div class="w3-dropdown-hover">

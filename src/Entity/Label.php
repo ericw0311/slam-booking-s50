@@ -84,13 +84,13 @@ class Label
         $this->file = $file;
         return $this;
     }
-
+/*
     public function __construct(?User $user, \App\Entity\File $file)
     {
         $this->setUser($user);
         $this->setFile($file);
     }
-
+*/
     /**
     * @ORM\PrePersist
     */
