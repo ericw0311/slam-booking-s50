@@ -274,6 +274,11 @@ class User implements UserInterface
         return ($this->getAccountType() != 'ORGANISATION' or $this->getUniqueName() !== null);
     }
 
+    public function __toString(): string
+    {
+        return (string) $this->username;
+    }
+
     /**
     * @ORM\PrePersist
     */

@@ -5,13 +5,18 @@ easy_admin:
             favicon: '/assets/backend/favicon.png'
     entities:
         Label:
+            controller: App\Controller\LabelAdminController
             class: App\Entity\Label
             label: 'Etiquettes'
             help: 'Les étiquettes permettent d''aporter une précision à la réservation d''une ressource'
             list:
                 title: "Les étiquettes du dossier"
                 fields: ['id', 'name']
+            form:
+                fields:
+                    - { property: 'name', icon: 'user' }
         UserFile:
+            controller: App\Controller\UserFileAdminController
             class: App\Entity\UserFile
             label: 'Utilisateurs'
             list:
