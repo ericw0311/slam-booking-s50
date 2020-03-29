@@ -1,8 +1,15 @@
 easy_admin:
+    site_name: 'Slam Booking'
+    user:
+        display_name: true
+        display_avatar: true
     design:
-        brand_color: 'blue  '
+        brand_color: 'red'
         assets:
-            favicon: '/assets/backend/favicon.png'
+            favicon: 'images/favicon.png'
+            css:
+                # ...
+                - 'styles/admin1.css'
     entities:
         Label:
             controller: App\Controller\LabelAdminController
@@ -22,7 +29,54 @@ easy_admin:
             list:
                 title: '%%entity_label%% listing'
         Timetable:
+            controller: App\Controller\TimetableAdminController
             class: App\Entity\Timetable
             label: 'Grilles horaires'
+            help: 'Les grilles horaires identifient les périodes de réservation de vos ressources'
             list:
                 title: "Les grilles horaires du dossier"
+                fields:
+                    - id
+                    - name
+                    - { property: 'timetableLines', type: 'association' }
+            form:
+                fields:
+                    - { property: 'name', icon: 'user' }
+        Site:
+            controller: App\Controller\SiteAdminController
+            class: App\Entity\Site
+            label: 'Sites'
+            help: 'Les sites permettent de localiser vos ressources'
+            list:
+                title: "Les sites du dossier"
+                fields:
+                    - id
+                    - name
+                    - { property: 'country', type: 'country' }
+            form:
+                fields:
+                    - { property: 'name', icon: 'user' }
+                    - { property: 'country', type: 'country' }
+        ResourceClassification:
+            controller: App\Controller\ResourceClassificationAdminController
+            class: App\Entity\ResourceClassification
+            label: 'Classifications des ressources'
+            list:
+                title: "Les classifications des ressources du dossier"
+                fields:
+                    - id
+                    - internal
+                    - type
+                    - name
+                    - active
+            form:
+                fields:
+                    - property: 'type'
+                      type: 'choice'
+                      type_options:
+                          mapped: true
+                          expanded: true
+                          multiple: false
+                          choices: {'Lieu': 'PLACE', 'Véhicule': 'VEHICLE', 'Outil': 'TOOL', 'Equipement sportif': 'SPORT'}
+                    - { property: 'name', icon: 'user' }
+                    - active

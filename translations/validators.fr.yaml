@@ -16,6 +16,8 @@ resource.already.exists: Cette ressource existe déjà
 
 resourceClassification.already.exists: Cette classification existe déjà
 
+site.already.exists: Ce site existe déjà
+
 timetable.already.exists: Cette grille horaire existe déjà
 
 timetableLine.endTime.control: L'heure de fin doit être supérieure à l'heure de début

@@ -69,6 +69,16 @@ class File
      */
     private $labels;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Site", mappedBy="file", orphanRemoval=true)
+     */
+    private $sites;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ResourceClassification", mappedBy="file", orphanRemoval=true)
+     */
+    private $resourceClassifications;
+
     public function __construct(?User $user)
     {
         $this->setUser($user);
@@ -77,6 +87,8 @@ class File
         $this->timetables = new ArrayCollection();
         $this->userFileGroups = new ArrayCollection();
         $this->labels = new ArrayCollection();
+        $this->sites = new ArrayCollection();
+        $this->resourceClassifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -267,6 +279,68 @@ class File
             // set the owning side to null (unless already changed)
             if ($label->getFile() === $this) {
                 $label->setFile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Site[]
+     */
+    public function getSites(): Collection
+    {
+        return $this->sites;
+    }
+
+    public function addSite(Site $site): self
+    {
+        if (!$this->sites->contains($site)) {
+            $this->sites[] = $site;
+            $site->setFile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSite(Site $site): self
+    {
+        if ($this->sites->contains($site)) {
+            $this->sites->removeElement($site);
+            // set the owning side to null (unless already changed)
+            if ($site->getFile() === $this) {
+                $site->setFile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ResourceClassification[]
+     */
+    public function getResourceClassifications(): Collection
+    {
+        return $this->resourceClassifications;
+    }
+
+    public function addResourceClassification(ResourceClassification $resourceClassification): self
+    {
+        if (!$this->resourceClassifications->contains($resourceClassification)) {
+            $this->resourceClassifications[] = $resourceClassification;
+            $resourceClassification->setFile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResourceClassification(ResourceClassification $resourceClassification): self
+    {
+        if ($this->resourceClassifications->contains($resourceClassification)) {
+            $this->resourceClassifications->removeElement($resourceClassification);
+            // set the owning side to null (unless already changed)
+            if ($resourceClassification->getFile() === $this) {
+                $resourceClassification->setFile(null);
             }
         }
 
