@@ -79,6 +79,11 @@ class File
      */
     private $resourceClassifications;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="file", orphanRemoval=true)
+     */
+    private $resources;
+
     public function __construct(?User $user)
     {
         $this->setUser($user);
@@ -89,6 +94,7 @@ class File
         $this->labels = new ArrayCollection();
         $this->sites = new ArrayCollection();
         $this->resourceClassifications = new ArrayCollection();
+        $this->resources = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -341,6 +347,37 @@ class File
             // set the owning side to null (unless already changed)
             if ($resourceClassification->getFile() === $this) {
                 $resourceClassification->setFile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Resource[]
+     */
+    public function getResources(): Collection
+    {
+        return $this->resources;
+    }
+
+    public function addResource(Resource $resource): self
+    {
+        if (!$this->resources->contains($resource)) {
+            $this->resources[] = $resource;
+            $resource->setFile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResource(Resource $resource): self
+    {
+        if ($this->resources->contains($resource)) {
+            $this->resources->removeElement($resource);
+            // set the owning side to null (unless already changed)
+            if ($resource->getFile() === $this) {
+                $resource->setFile(null);
             }
         }
 

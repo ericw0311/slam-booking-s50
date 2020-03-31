@@ -130,6 +130,11 @@ class User implements UserInterface
      */
     private $resourceClassifications;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="user", orphanRemoval=true)
+     */
+    private $resources;
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
@@ -143,6 +148,7 @@ class User implements UserInterface
         $this->labels = new ArrayCollection();
         $this->sites = new ArrayCollection();
         $this->resourceClassifications = new ArrayCollection();
+        $this->resources = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -642,6 +648,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($resourceClassification->getUser() === $this) {
                 $resourceClassification->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Resource[]
+     */
+    public function getResources(): Collection
+    {
+        return $this->resources;
+    }
+
+    public function addResource(Resource $resource): self
+    {
+        if (!$this->resources->contains($resource)) {
+            $this->resources[] = $resource;
+            $resource->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResource(Resource $resource): self
+    {
+        if ($this->resources->contains($resource)) {
+            $this->resources->removeElement($resource);
+            // set the owning side to null (unless already changed)
+            if ($resource->getUser() === $this) {
+                $resource->setUser(null);
             }
         }
 

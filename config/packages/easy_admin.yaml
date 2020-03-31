@@ -80,3 +80,25 @@ easy_admin:
                           choices: {'Lieu': 'PLACE', 'Véhicule': 'VEHICLE', 'Outil': 'TOOL', 'Equipement sportif': 'SPORT'}
                     - { property: 'name', icon: 'user' }
                     - active
+        Resource:
+            controller: App\Controller\ResourceAdminController
+            class: App\Entity\Resource
+            label: 'Ressources'
+            list:
+                title: "Les ressources du dossier"
+                fields:
+                    - id
+                    - type
+                    - name
+                    - { property: 'image', type: 'image', base_path: 'images/resources' }
+            form:
+                fields:
+                    - property: 'type'
+                      type: 'choice'
+                      type_options:
+                          mapped: true
+                          expanded: true
+                          multiple: false
+                          choices: {'Lieu': 'PLACE', 'Véhicule': 'VEHICLE', 'Outil': 'TOOL', 'Equipement sportif': 'SPORT'}
+                    - { property: 'name', icon: 'user' }
+                    - { property: 'imageFile', type: 'vich_image' }
