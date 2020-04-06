@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     app.notifications.email_sender: eric.willard@slam-booking.net
+    app.path.resource_images: /images/resources
+
 
 services:
     # default configuration for services in *this* file

@@ -1,5 +1,7 @@
 easy_admin:
     site_name: 'Slam Booking'
+    list:
+        actions: ['show']
     user:
         display_name: true
         display_avatar: true
@@ -90,7 +92,7 @@ easy_admin:
                     - id
                     - type
                     - name
-                    - { property: 'image', type: 'image', base_path: 'images/resources' }
+                    - { property: 'imageName', type: 'image', base_path: '%app.path.resource_images%' }
             form:
                 fields:
                     - property: 'type'
